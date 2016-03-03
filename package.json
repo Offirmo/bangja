@@ -1,0 +1,29 @@
+{
+  "name": "bangja",
+  "version": "0.0.1",
+  "description": "A servant for taking care of an npm-based project menial tasks",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Offirmo/bangja.git"
+  },
+  "keywords": [
+    "npm",
+    "greenkeeper",
+    "dependencies",
+    "updates"
+  ],
+  "author": "Offirmo <offirmo.net@gmail.com>",
+  "license": "Unlicense",
+  "bugs": {
+    "url": "https://github.com/Offirmo/bangja/issues"
+  },
+  "homepage": "https://github.com/Offirmo/bangja#readme",
+  "dependencies": {
+    "npm-pkgr": "^0.5.0",
+    "semver": "^5.1.0"
+  }
+}
