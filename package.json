@@ -29,6 +29,7 @@
     "babel-preset-es2015-node5": "1.1.2",
     "cli-table": "0.3.1",
     "commander": "2.9.0",
+    "lodash": "4.6.1",
     "mversion": "1.10.1",
     "npm-check": "4.1.4",
     "npm-pkgr": "^0.5.0",
