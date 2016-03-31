@@ -3,9 +3,18 @@
   "version": "0.0.1",
   "description": "A servant for taking care of an npm-based project menial tasks",
   "main": "index.js",
+  "config": {
+    "MOCHA_OPTS": "--debug --check-leaks --require build/server/mocha.init.js --recursive build/**/*.spec.js",
+    "BABEL_OPTS": "lib --out-dir build"
+  },
   "scripts": {
     "test": "npm test",
-    "start": "babel-node index.js"
+    "lint": "eslint .",
+    "babel-node": "babel-node index.js",
+    "build": "babel $npm_package_config_BABEL_OPTS",
+    "babel-watch": "babel-watch --watch lib --watch *.js index.js",
+    "dev": "npm run babel-watch",
+    "xx": "rm -rf node_modules"
   },
   "repository": {
     "type": "git",
@@ -25,8 +34,6 @@
   "homepage": "https://github.com/Offirmo/bangja#readme",
   "dependencies": {
     "async": "1.5.2",
-    "babel-cli": "6.6.5",
-    "babel-preset-es2015-node5": "1.1.2",
     "cli-table": "0.3.1",
     "commander": "2.9.0",
     "lodash": "4.6.1",
@@ -41,5 +48,20 @@
     "semver": "^5.1.0",
     "vorpal": "1.10.8",
     "vorpal-log": "1.1.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.6.5",
+    "babel-preset-es2015-node5": "^1.2.0",
+    "babel-register": "^6.7.2",
+    "babel-watch": "^1.0.2",
+    "chai": "^3.5.0",
+    "chai-as-promised": "^5.3.0",
+    "chai-datetime": "^1.4.1",
+    "chai-things": "^0.2.0",
+    "eslint": "^2.4.0",
+    "mocha": "^2.4.5",
+    "pre-commit": "^1.1.2",
+    "sinon": "^1.17.3",
+    "sinon-chai": "^2.8.0"
   }
 }

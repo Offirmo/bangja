@@ -14,6 +14,7 @@ Priorities:
 
 releases
 
+https://en.wikipedia.org/wiki/DWIM
 
 
 useful :
@@ -40,3 +41,11 @@ https://github.com/alekseykulikov/babel-preset-es2015-node5
 
 http://stackoverflow.com/questions/3133243/how-to-get-path-to-current-script-with-node-js
 http://stackoverflow.com/questions/15939380/how-to-get-the-cwd-current-working-directory-from-a-nodejs-child-process-in-b
+
+
+
+http://stackoverflow.com/questions/1783405/checkout-remote-git-branch
+http://gitready.com/intermediate/2009/02/13/list-remote-branches.html
+https://confluence.atlassian.com/bitbucket/checkout-a-branch-into-a-local-repository-313466957.html
+https://help.github.com/articles/setting-the-default-branch/
+http://stackoverflow.com/questions/18726037/what-determines-default-branch-after-git-clone
