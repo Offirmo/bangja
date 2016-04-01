@@ -8,11 +8,13 @@
     "BABEL_OPTS": "lib --out-dir build"
   },
   "scripts": {
-    "test": "npm test",
-    "lint": "eslint .",
     "babel-node": "babel-node index.js",
     "build": "babel $npm_package_config_BABEL_OPTS",
     "babel-watch": "babel-watch --watch lib --watch *.js index.js",
+    "babel--watch": "babel $npm_package_config_BABEL_OPTS --watch",
+    "nodemon": "babel-watch --watch lib --watch *.js index.js",
+    "lint": "eslint .",
+    "test": "npm test",
     "dev": "npm run babel-watch",
     "xx": "rm -rf node_modules"
   },
@@ -36,8 +38,10 @@
     "async": "1.5.2",
     "cli-table": "0.3.1",
     "commander": "2.9.0",
+    "cross-spawn-async": "2.1.9",
     "lodash": "4.6.1",
     "mversion": "1.10.1",
+    "nodemon": "1.9.1",
     "npm-check": "4.1.4",
     "npm-pkgr": "^0.5.0",
     "nsp": "2.2.0",
@@ -63,5 +67,6 @@
     "pre-commit": "^1.1.2",
     "sinon": "^1.17.3",
     "sinon-chai": "^2.8.0"
-  }
+  },
+  "pre-commit": []
 }
