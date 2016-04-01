@@ -4,19 +4,11 @@ Object.defineProperty(exports, "__esModule", {
 	value: true
 });
 
-var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
-
-var _path = require('path');
-
-var _path2 = _interopRequireDefault(_path);
-
-var _fs = require('fs');
-
-var _fs2 = _interopRequireDefault(_fs);
-
 var _util = require('util');
 
 var _util2 = _interopRequireDefault(_util);
+
+var _module_loader = require('./module_loader');
 
 var _lodash = require('lodash');
 
@@ -42,7 +34,7 @@ function run(options) {
 
 	hello();
 
-	detect_modules().then(load_modules).then(perform_analysis).catch(err => {
+	(0, _module_loader.detect_modules)().then(_module_loader.load_modules).then(perform_analysis).catch(err => {
 		console.error('ERROR !');
 		console.error(err.message);
 		console.error(_prettyjson2.default.render(err));
@@ -56,154 +48,25 @@ Bangja: Hello O great master !
 `);
 }
 
-// async "is directory"
-// *special API* for use in async.filter
-function async_filter_is_directory(path, cb) {
-	// stat = follow symlinks, good
-	_fs2.default.stat(path, (err, stats) => {
-		if (err) return cb(err);
-
-		// no 1st "err" arg, intentional per async doc
-		cb(stats.isDirectory());
-	});
-}
-
-function get_directories(srcpath) {
-	return new Promise(function (fulfill, reject) {
-		_fs2.default.readdir(srcpath, (err, files) => {
-			if (err) {
-				if (err.code === 'ENOENT') return fulfill([]);
-				return reject(err);
-			}
-
-			// make it a full path
-			files = files.map(_lodash2.default.ary(_path2.default.join.bind(_path2.default, srcpath), 1));
-
-			// REM : async filter cb takes no "err" param
-			_async2.default.filter(files, async_filter_is_directory, dirs => fulfill(dirs));
-		});
-	});
-}
-
-function detect_modules(cb) {
-	let module_sources = [_path2.default.join(__dirname, '../bangja_modules')];
-	// TODO look into named package.json
-	// TODO look at params
-	console.log('* Detected sources :\n' + _util2.default.inspect(module_sources, { colors: true }));
-
-	return Promise.all(module_sources.map(get_directories)).then(pathes => {
-		pathes = _lodash2.default.flatten(pathes);
-		console.log('* Detected modules :\n' + _util2.default.inspect(pathes, { colors: true }));
-		return pathes;
-	});
-}
-
-function load_modules(module_pathes, callback) {
-	let diagnostics = module_pathes.map(module_path => {
-		module_path = _path2.default.join(module_path, 'diagnostics');
-
-		return get_directories(module_path);
-	});
-
-	let recipes = module_pathes.map(module_path => {
-		module_path = _path2.default.join(module_path, 'recipes');
-
-		return get_directories(module_path);
-	});
-
-	return Promise.all([Promise.all(diagnostics).then(p => _lodash2.default.flatten(p)).then(load_diagnostics), Promise.all(recipes).then(p => _lodash2.default.flatten(p)).then(load_recipes)]).then(_ref => {
-		var _ref2 = _slicedToArray(_ref, 2);
-
-		let diagnostics = _ref2[0];
-		let recipes = _ref2[1];
-
-		console.log('* diagnostics loaded :\n' + _util2.default.inspect(diagnostics, { colors: true }));
-		console.log('* recipes loaded :\n' + _util2.default.inspect(recipes, { colors: true }));
-
-		return {
-			diagnostics: diagnostics,
-			recipes: recipes
-		};
-	});
-}
-
-function load_diagnostics(diagnostic_pathes) {
-	console.log('* found diagnostics :\n' + _util2.default.inspect(diagnostic_pathes, { colors: true }));
-
-	return _lodash2.default.compact(diagnostic_pathes.map(load_diagnostic));
-}
-
-function load_diagnostic(diagnostic_path, callback) {
-	let id = diagnostic_path.split(_path2.default.sep).slice(-3);
-	id = id[0] + '/' + id[2];
-
-	const mod = non_throwing_require(diagnostic_path);
-	if (!mod) return;
-
-	console.log(_util2.default.inspect(mod, { colors: true }));
-	return {
-		id: id,
-		fn: mod.perform,
-		dependencies: mod.dependencies,
-		async_auto_task: mod.dependencies.concat(mod.perform)
-	};
-}
-
-function load_recipes(recipe_pathes) {
-	//console.log('* found recipes :\n' + util.inspect(recipe_pathes, {colors: true}));
-
-	return _lodash2.default.compact(recipe_pathes.map(load_recipe));
-}
-
-function load_recipe(recipe_path, callback) {
-	let id = recipe_path.split(_path2.default.sep).slice(-3);
-	id = id[0] + '/' + id[2];
-
-	const mod = non_throwing_require(recipe_path);
-	if (!mod) return;
-
-	console.log(_util2.default.inspect(mod, { colors: true }));
-	return {
-		id: id,
-		fn: mod.perform,
-		dependencies: mod.dependencies,
-		async_auto_task: mod.dependencies.concat(mod.perform)
-	};
-}
-
-/*
- function load_module(module_path, callback) {
- console.log('loading ' + module_path);
- let path_elems = module_path.split(path.sep);
- console.log('found parts :', util.inspect(path_elems, {colors: true}));
-
- let module = {
- };
-
- callback(null, module);
- }*/
-
 function perform_analysis(modules, cb) {
-	console.log('TODO analyze !!!', _util2.default.inspect(modules, { colors: true }));
+	return;
+	const diagnostic_keys = Object.keys(modules.diagnostics);
+
+	console.log('* Running diagnostics...', diagnostic_keys);
+
+	const auto_diagnostic = {};
+	diagnostic_keys.forEach(id => {
+		auto_diagnostic[id] = modules.diagnostics[id].async_auto_task;
+	});
+
+	//console.log('* TODO run\n' + util.inspect(auto_diagnostic, {colors: true}));
+
+	_async2.default.auto(auto_diagnostic, (err, results) => {
+		console.info('* Diagnostics finished :');
+		console.log('  - err = ', err);
+		console.log('  - results = ', results);
+	});
 }
 
 function perform_recipe(recipe, diagnostics) {}
-
-function non_throwing_require(file_path) {
-	//console.log('non_throwing_require', file_path);
-	try {
-		return require(file_path);
-	} catch (err) {
-		if (err.code === 'MODULE_NOT_FOUND' && err.message.slice(-file_path.length - 1, -1) === file_path) {
-			// we tried to import an non-existing file
-			// swallow the error, this is just what we want to ignore.
-		} else {
-				// there was an other error,
-				// most likely the imported file is syntactically incorrect,
-				// in which case it helps *a lot* to display the error :
-				console.error('! require error for "' + file_path + '" :', err);
-			}
-
-		return null;
-	}
-}
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uL2xpYi9jb3JlL2luZGV4LmpzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7Ozs7OztBQUFBOzs7O0FBRUE7O0FBRUE7Ozs7QUFDQTs7OztBQUNBOzs7Ozs7a0JBRWU7QUFDZCxTQURjOzs7O0FBS2YsU0FBUyxHQUFULENBQWEsT0FBYixFQUFzQjtBQUNyQixTQUFRLEdBQVIsQ0FBWSx5QkFBWixFQUF1QyxxQkFBVyxNQUFYLENBQWtCLE9BQWxCLENBQXZDLEVBRHFCOztBQUdyQixTQUhxQjs7QUFLckIsc0NBQ0MsSUFERCw4QkFFQyxJQUZELENBRU0sZ0JBRk4sRUFHQyxLQUhELENBR08sT0FBTztBQUNiLFVBQVEsS0FBUixDQUFjLFNBQWQsRUFEYTtBQUViLFVBQVEsS0FBUixDQUFjLElBQUksT0FBSixDQUFkLENBRmE7QUFHYixVQUFRLEtBQVIsQ0FBYyxxQkFBVyxNQUFYLENBQWtCLEdBQWxCLENBQWQsRUFIYTtFQUFQLENBSFAsQ0FMcUI7Q0FBdEI7O0FBZ0JBLFNBQVMsS0FBVCxHQUFpQjtBQUNoQixTQUFRLEdBQVIsQ0FBWSxDQUFDOzs7QUFBRCxDQUFaLEVBRGdCO0NBQWpCOztBQVFBLFNBQVMsZ0JBQVQsQ0FBMEIsT0FBMUIsRUFBbUMsRUFBbkMsRUFBdUM7QUFDdEMsUUFEc0M7QUFFdEMsT0FBTSxrQkFBa0IsT0FBTyxJQUFQLENBQVksUUFBUSxXQUFSLENBQTlCLENBRmdDOztBQUl0QyxTQUFRLEdBQVIsQ0FBWSwwQkFBWixFQUF3QyxlQUF4QyxFQUpzQzs7QUFNdEMsT0FBTSxrQkFBa0IsRUFBbEIsQ0FOZ0M7QUFPdEMsaUJBQWdCLE9BQWhCLENBQXdCLE1BQU07QUFDN0Isa0JBQWdCLEVBQWhCLElBQXNCLFFBQVEsV0FBUixDQUFvQixFQUFwQixFQUF3QixlQUF4QixDQURPO0VBQU4sQ0FBeEI7Ozs7QUFQc0MsZ0JBYXRDLENBQU0sSUFBTixDQUFXLGVBQVgsRUFBNEIsQ0FBQyxHQUFELEVBQU0sT0FBTixLQUFrQjtBQUM3QyxVQUFRLElBQVIsQ0FBYSwwQkFBYixFQUQ2QztBQUU3QyxVQUFRLEdBQVIsQ0FBWSxZQUFaLEVBQTBCLEdBQTFCLEVBRjZDO0FBRzdDLFVBQVEsR0FBUixDQUFZLGdCQUFaLEVBQThCLE9BQTlCLEVBSDZDO0VBQWxCLENBQTVCLENBYnNDO0NBQXZDOztBQXFCQSxTQUFTLGNBQVQsQ0FBd0IsTUFBeEIsRUFBZ0MsV0FBaEMsRUFBNkMsRUFBN0MiLCJmaWxlIjoiaW5kZXguanMiLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgdXRpbCBmcm9tICd1dGlsJztcblxuaW1wb3J0IHtkZXRlY3RfbW9kdWxlcywgbG9hZF9tb2R1bGVzfSBmcm9tICcuL21vZHVsZV9sb2FkZXInO1xuXG5pbXBvcnQgXyBmcm9tICdsb2Rhc2gnO1xuaW1wb3J0IGFzeW5jIGZyb20gJ2FzeW5jJztcbmltcG9ydCBwcmV0dHlqc29uIGZyb20gJ3ByZXR0eWpzb24nO1xuXG5leHBvcnQgZGVmYXVsdCB7XG5cdHJ1blxufTtcblxuXG5mdW5jdGlvbiBydW4ob3B0aW9ucykge1xuXHRjb25zb2xlLmxvZygnKiBydW5uaW5nIHdpdGggb3B0aW9uczonLCBwcmV0dHlqc29uLnJlbmRlcihvcHRpb25zKSk7XG5cblx0aGVsbG8oKTtcblxuXHRkZXRlY3RfbW9kdWxlcygpXG5cdC50aGVuKGxvYWRfbW9kdWxlcylcblx0LnRoZW4ocGVyZm9ybV9hbmFseXNpcylcblx0LmNhdGNoKGVyciA9PiB7XG5cdFx0Y29uc29sZS5lcnJvcignRVJST1IgIScpO1xuXHRcdGNvbnNvbGUuZXJyb3IoZXJyLm1lc3NhZ2UpO1xuXHRcdGNvbnNvbGUuZXJyb3IocHJldHR5anNvbi5yZW5kZXIoZXJyKSk7XG5cdH0pO1xufVxuXG5cbmZ1bmN0aW9uIGhlbGxvKCkge1xuXHRjb25zb2xlLmxvZyhgXG5CYW5namE6IEhlbGxvIE8gZ3JlYXQgbWFzdGVyICFcbiAgICAgICAgSSdtIGhlcmUgdG8gdGFrZSBjYXJlIG9mIHRoZSBtZW5pYWwgc3R1ZmYgc28geW91IGNhbiBzYXZlIHRoZSB3b3JsZCAhXG5gKTtcbn1cblxuXG5mdW5jdGlvbiBwZXJmb3JtX2FuYWx5c2lzKG1vZHVsZXMsIGNiKSB7XG5cdHJldHVybjtcblx0Y29uc3QgZGlhZ25vc3RpY19rZXlzID0gT2JqZWN0LmtleXMobW9kdWxlcy5kaWFnbm9zdGljcyk7XG5cblx0Y29uc29sZS5sb2coJyogUnVubmluZyBkaWFnbm9zdGljcy4uLicsIGRpYWdub3N0aWNfa2V5cyk7XG5cblx0Y29uc3QgYXV0b19kaWFnbm9zdGljID0ge307XG5cdGRpYWdub3N0aWNfa2V5cy5mb3JFYWNoKGlkID0+IHtcblx0XHRhdXRvX2RpYWdub3N0aWNbaWRdID0gbW9kdWxlcy5kaWFnbm9zdGljc1tpZF0uYXN5bmNfYXV0b190YXNrXG5cdH0pO1xuXG5cdC8vY29uc29sZS5sb2coJyogVE9ETyBydW5cXG4nICsgdXRpbC5pbnNwZWN0KGF1dG9fZGlhZ25vc3RpYywge2NvbG9yczogdHJ1ZX0pKTtcblxuXHRhc3luYy5hdXRvKGF1dG9fZGlhZ25vc3RpYywgKGVyciwgcmVzdWx0cykgPT4ge1xuXHRcdGNvbnNvbGUuaW5mbygnKiBEaWFnbm9zdGljcyBmaW5pc2hlZCA6Jyk7XG5cdFx0Y29uc29sZS5sb2coJyAgLSBlcnIgPSAnLCBlcnIpO1xuXHRcdGNvbnNvbGUubG9nKCcgIC0gcmVzdWx0cyA9ICcsIHJlc3VsdHMpO1xuXHR9KTtcbn1cblxuXG5mdW5jdGlvbiBwZXJmb3JtX3JlY2lwZShyZWNpcGUsIGRpYWdub3N0aWNzKSB7XG5cbn1cbiJdfQ==

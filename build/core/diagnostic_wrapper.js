@@ -1,0 +1,10 @@
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+exports.default = wrapper;
+function wrapper(diagnostic_fn) {
+	return function (callback) {};
+}
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uL2xpYi9jb3JlL2RpYWdub3N0aWNfd3JhcHBlci5qcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7OztrQkFDd0I7QUFBVCxTQUFTLE9BQVQsQ0FBaUIsYUFBakIsRUFBZ0M7QUFDOUMsUUFBTyxVQUFTLFFBQVQsRUFBbUIsRUFBbkIsQ0FEdUM7Q0FBaEMiLCJmaWxlIjoiZGlhZ25vc3RpY193cmFwcGVyLmpzIiwic291cmNlc0NvbnRlbnQiOlsiXG5leHBvcnQgZGVmYXVsdCBmdW5jdGlvbiB3cmFwcGVyKGRpYWdub3N0aWNfZm4pIHtcblx0cmV0dXJuIGZ1bmN0aW9uKGNhbGxiYWNrKSB7XG5cdFx0XG5cdH1cbn1cblxuIl19
