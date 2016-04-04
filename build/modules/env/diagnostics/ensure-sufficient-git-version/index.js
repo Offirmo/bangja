@@ -1,0 +1,19 @@
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+exports.perform = perform;
+exports.fix = fix;
+const dependencies = exports.dependencies = ['diagnostic:env/git-version'];
+
+function perform(results, callback) {
+	console.log('results', results);
+	callback();
+}
+
+function fix(callback) {
+	console.log('TODO');
+	callback();
+}
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uLy4uL2xpYi9tb2R1bGVzL2Vudi9kaWFnbm9zdGljcy9lbnN1cmUtc3VmZmljaWVudC1naXQtdmVyc2lvbi9pbmRleC5qcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7OztRQUdnQjtRQUtBO0FBUFQsTUFBTSxzQ0FBZSxDQUFFLDRCQUFGLENBQWY7O0FBRU4sU0FBUyxPQUFULENBQWlCLE9BQWpCLEVBQTBCLFFBQTFCLEVBQW9DO0FBQzFDLFNBQVEsR0FBUixDQUFZLFNBQVosRUFBdUIsT0FBdkIsRUFEMEM7QUFFMUMsWUFGMEM7Q0FBcEM7O0FBS0EsU0FBUyxHQUFULENBQWEsUUFBYixFQUF1QjtBQUM3QixTQUFRLEdBQVIsQ0FBWSxNQUFaLEVBRDZCO0FBRTdCLFlBRjZCO0NBQXZCIiwiZmlsZSI6ImluZGV4LmpzIiwic291cmNlc0NvbnRlbnQiOlsiXG5leHBvcnQgY29uc3QgZGVwZW5kZW5jaWVzID0gWyAnZGlhZ25vc3RpYzplbnYvZ2l0LXZlcnNpb24nIF07XG5cbmV4cG9ydCBmdW5jdGlvbiBwZXJmb3JtKHJlc3VsdHMsIGNhbGxiYWNrKSB7XG5cdGNvbnNvbGUubG9nKCdyZXN1bHRzJywgcmVzdWx0cyk7XG5cdGNhbGxiYWNrKCk7XG59XG5cbmV4cG9ydCBmdW5jdGlvbiBmaXgoY2FsbGJhY2spIHtcblx0Y29uc29sZS5sb2coJ1RPRE8nKTtcblx0Y2FsbGJhY2soKTtcbn1cbiJdfQ==
