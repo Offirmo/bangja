@@ -8,14 +8,20 @@
     "BABEL_OPTS": "lib --out-dir build"
   },
   "scripts": {
-    "babel-node": "babel-node index.js",
     "build": "babel $npm_package_config_BABEL_OPTS",
-    "babel-watch": "babel-watch --watch lib --watch *.js index.js",
+    "babel-node": "babel-node index.js",
+
     "babel--watch": "babel $npm_package_config_BABEL_OPTS --watch",
-    "nodemon": "babel-watch --watch lib --watch *.js index.js",
+
+    "babel-watch": "babel-watch --watch lib --watch *.js index.js",
+    "nodemon": "nodemon",
+
     "lint": "eslint .",
     "test": "npm test",
-    "dev": "npm run babel-watch",
+
+    "dev1": "npm run babel--watch",
+    "dev2": "npm run nodemon",
+
     "xx": "rm -rf node_modules"
   },
   "repository": {
