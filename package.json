@@ -12,7 +12,7 @@
     "babel-node": "babel-node index.js",
     "babel--watch": "babel $npm_package_config_BABEL_OPTS --watch",
     "babel-watch": "babel-watch --watch lib --watch *.js index.js",
-    "nodemon": "nodemon --delay 1",
+    "nodemon": "nodemon --legacy-watch --delay 1",
     "lint": "eslint .",
     "test": "npm test",
     "dev1": "rm -rf build && npm run babel--watch",
