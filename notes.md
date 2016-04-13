@@ -1,4 +1,18 @@
 
+
+
+## Underlying libs
+* https://github.com/cujojs/when/blob/master/docs/api.md
+* https://github.com/npm/node-semver
+
+
+## design principles
+https://en.wikipedia.org/wiki/DWIM
+
+
+
+## TOSORT
+
 https://github.com/dylang/npm-check
 https://github.com/dylang/anthology
 https://github.com/dylang/changelog
@@ -14,7 +28,6 @@ Priorities:
 
 releases
 
-https://en.wikipedia.org/wiki/DWIM
 
 
 useful :
