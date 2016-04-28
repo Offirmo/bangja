@@ -8,6 +8,7 @@
     "BABEL_OPTS": "lib --out-dir build"
   },
   "scripts": {
+    "start": "echo 'please start dev1 + dev1'",
     "build": "babel $npm_package_config_BABEL_OPTS",
     "babel-node": "babel-node index.js",
     "babel--watch": "babel $npm_package_config_BABEL_OPTS --watch",
