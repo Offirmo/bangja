@@ -62,3 +62,11 @@ http://gitready.com/intermediate/2009/02/13/list-remote-branches.html
 https://confluence.atlassian.com/bitbucket/checkout-a-branch-into-a-local-repository-313466957.html
 https://help.github.com/articles/setting-the-default-branch/
 http://stackoverflow.com/questions/18726037/what-determines-default-branch-after-git-clone
+
+https://github.com/piuccio/jspm-check-updates
+https://github.com/tjunnone/npm-check-updates
+https://github.com/pauldijou/outdated
+https://www.npmjs.com/package/npm-check
+
+TOVALIDATE !
+http://schemastore.org/json/
